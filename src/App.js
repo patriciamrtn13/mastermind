@@ -3,6 +3,14 @@ import './App.css';
 
 const numberAttempts = 10;
 
+class Circle extends Component{
+    render(){
+        return(
+            <div className="Circle"></div>
+        )
+    }
+}
+
 class Row extends Component{
     render(){
         return(
@@ -18,20 +26,12 @@ class Row extends Component{
 
 class Attempt extends Component{
     render(){
-        var rows = [];
+        var listrows = [];
         for(var i=numberAttempts; i>=1; i--){
-            rows.push(<div className="Attempt">{i}</div>);
+            listrows.push(<div key={i} className="Attempt">{i}</div>);
         }
         return(
-            <div className="LeftColumn">{rows}</div>
-        )
-    }
-}
-
-class Circle extends Component{
-    render(){
-        return(
-            <div className="Circle"></div>
+            <div className="LeftColumn">{listrows}</div>
         )
     }
 }
@@ -44,7 +44,7 @@ class App extends Component{
                 <div className="Board">
                     <Attempt />
                     <div className="CenterColumn">
-                        {[<Row />]}
+                        {[<Row key='1' />, <Row key='2'/>]}
                     </div>
                     <div className="RightColumn">
                         
