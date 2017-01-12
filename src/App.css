@@ -9,3 +9,17 @@
     border: 1px solid #D9D9D9;
     margin: 0 auto;
 }
+
+.Circle{
+    height: 30px;
+    width: 30px;
+    border-radius: 30px;
+    background-color: black;
+}
+
+.Row{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 20px 100px;
+}
