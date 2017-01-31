@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import './App.css';
 
 const numberAttempts = 10;
-const initAttempts = 1;
 
 var colors = {
     circleBackground: ['black', 'blue', 'red', 'yellow', 'green'],
@@ -66,9 +65,10 @@ class Row extends Component{
         
     }
     
-    next(){
-        
-    }
+//    next(nb){
+//        nb++;
+//        console.log(nb);
+//    }
             
     render(){
         
@@ -78,7 +78,7 @@ class Row extends Component{
         
         let button = null
         if(validate == true){
-            button = <button onClick={()=>this.next()}>ok</button>
+            button = <button onClick={this.props.validate}>ok</button>
         }
             
         
@@ -120,6 +120,25 @@ class Attempt extends Component{
 }
 
 class App extends Component{
+    constructor(){
+        super();
+        var self = this;
+
+       
+        this.state = {
+            attempts: 1
+        };
+        
+    }
+    validate(){
+       // console.log(this.state.attempts);
+       // const attempts = this.state.attempts++;
+        
+        
+//        this.setState({
+//            attempts: attempts
+//        })
+    }
     render(){
         return (
             <div className="App">
@@ -129,7 +148,7 @@ class App extends Component{
                     <RandomCombinaison />
                     <Attempt />
                     <div className="CenterColumn">
-                        {[<Row key='1' />]}
+                        {[<Row key='1' attempts={this.state.attempts} validate={this.validate} />]}
                     </div>
                     <div className="RightColumn">
                         {[<Correction key='1' />]}
