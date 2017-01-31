@@ -10,7 +10,9 @@
     margin: 0 auto;
     display: flex;
 }
-
+.Block{
+    width: 100%;
+}
 .Circle{
     height: 30px;
     width: 30px;
@@ -25,6 +27,13 @@
     height: 50px;
 }
 
+.Correction .Circle{
+    height: 15px;
+    width: 15px;
+    border-radius: 15px;
+    background-color: white;
+}
+
 .Attempt{
     justify-content: center;
 }
@@ -37,6 +46,10 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
+}
+
+.RightColumn{
+    margin: 0 20px;
 }
 
 .CenterColumn{
