@@ -5,8 +5,10 @@ const numberAttempts = 10;
 
 var colors = {
     circleBackground: ['black', 'blue', 'red', 'yellow', 'green'],
-    correctBackground: ['green', 'orange']
+    correctBackground: ['white', 'green', 'orange']
 };
+
+import Validation from './validation';
 
 var numberColors = colors.circleBackground.length;
 var randomColor = [];
@@ -40,6 +42,7 @@ class Circle extends Component{
 }
 
 class Row extends Component{
+    
     constructor(){
         super();
         var self = this;
@@ -62,13 +65,7 @@ class Row extends Component{
         this.setState({
             background: background
         });
-        
     }
-    
-//    next(nb){
-//        nb++;
-//        console.log(nb);
-//    }
             
     render(){
         
@@ -78,7 +75,7 @@ class Row extends Component{
         
         let button = null
         if(validate == true){
-            button = <button onClick={this.props.validate}>ok</button>
+            button = <button onClick={()=>this.props.validate(this.state.background)}>ok</button>
         }
             
         
@@ -96,13 +93,30 @@ class Row extends Component{
 
 class Correction extends Component{
     render(){
+        const correct = this.props.correct;
+        const misplaced = this.props.misplaced;
+        
+        
+        
+        const nbError = 4 - (correct + misplaced);
+        console.log(correct, misplaced, nbError);
+        
+        var listCorrection = [];
+        
+        for(var i=0; i<correct; i++){
+            listCorrection.push(<Circle fill={colors.correctBackground[1]}/>);
+        }
+        
+        for(var i=0; i<misplaced; i++){
+            listCorrection.push(<Circle fill={colors.correctBackground[2]}/>);
+        }
+        
+        for(var i=0; i<nbError; i++){
+            listCorrection.push(<Circle fill={colors.correctBackground[0]}/>);
+        }
+        
         return(
-            <div className="Row Correction">
-                <Circle />
-                <Circle /> 
-                <Circle /> 
-                <Circle /> 
-            </div>
+            <div className="Row Correction">{listCorrection}</div>
         )
     }
 }
@@ -124,21 +138,30 @@ class App extends Component{
         super();
         var self = this;
 
-       
         this.state = {
             attempts: 1
         };
         
     }
-    validate(){
-       // console.log(this.state.attempts);
-       // const attempts = this.state.attempts++;
+    
+    validate(background){
         
+        const result = Validation(background, randomColor);
+        const attempt = this.state.attempts++;
         
-//        this.setState({
-//            attempts: attempts
-//        })
+        this.setState({
+            misplaced: result.misplaced,
+            correct: result.correct,
+            attempts: attempt
+        })
+        
+        console.log(this.state.attempts);
+        
     }
+    
+    
+    
+    
     render(){
         return (
             <div className="App">
@@ -148,10 +171,12 @@ class App extends Component{
                     <RandomCombinaison />
                     <Attempt />
                     <div className="CenterColumn">
-                        {[<Row key='1' attempts={this.state.attempts} validate={this.validate} />]}
+                        {[
+                            <Row key='1' attempts={this.state.attempts} validate={(background)=>this.validate(background)} />
+                        ]}
                     </div>
                     <div className="RightColumn">
-                        {[<Correction key='1' />]}
+                        {[<Correction key='1' correct={this.state.correct} misplaced={this.state.misplaced}/>]}
                     </div>
                 </div>
                 
